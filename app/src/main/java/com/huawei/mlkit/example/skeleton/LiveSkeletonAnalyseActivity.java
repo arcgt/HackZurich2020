@@ -91,6 +91,17 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
     private static long startTime;
     private static long elapsed = 0;
+    private static int health = 3;
+    private static int points = 0;
+    private static boolean isCorrectPosture = false;
+    private static boolean isCorrectTranslation = false;
+
+
+    public static float[][] current_skeletons = {{416.6629f, 312.46442f, 101, 0.8042025f}, {382.3348f, 519.43396f, 102, 0.86383355f}, {381.0387f, 692.09515f, 103, 0.7551306f}
+            , {659.49194f, 312.24445f, 104, 0.8305682f}, {693.5356f, 519.4844f, 105, 0.8932837f}, {694.0054f, 692.4169f, 106, 0.8742422f}
+            , {485.08786f, 726.8787f, 107, 0.6004682f}, {485.02808f, 935.4897f, 108, 0.7334503f}, {485.09384f, 1177.127f, 109, 0.67240065f}
+            , {623.7807f, 726.7474f, 110, 0.5483011f}, {624.5828f, 936.3222f, 111, 0.730425f}, {625.81915f, 1212.2491f, 112, 0.72417295f}
+            , {521.47363f, 103.95903f, 113, 0.7780853f}, {521.6231f, 277.2533f, 114, 0.7745689f}};
 
     private int lensType = LensEngine.BACK_LENS;
 
@@ -325,6 +336,8 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     }
 
 
+
+
     private class SkeletonAnalyzerTransactor implements MLAnalyzer.MLTransactor<MLSkeleton> {
         private GraphicOverlay mGraphicOverlay;
 
@@ -343,9 +356,14 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             List<MLSkeleton> list = new ArrayList<>();
             for (int i = 0; i < sparseArray.size(); i++) {
                 list.add(sparseArray.valueAt(i));
+                printJoints(sparseArray.valueAt(i).getJoints());
+               // Log.d("skelly", "JP"+i+sparseArray.valueAt(i).getJoints().get(0).getType());
             }
             // Remove invalid point.
             List<MLSkeleton> skeletons = SkeletonUtils.getValidSkeletons(list);
+//            Log.d("skelly", "skeleton");
+//          Log.d("skeleton", Arrays.toString(list.toArray(list)));
+
             SkeletonGraphic graphic = new SkeletonGraphic(this.mGraphicOverlay, skeletons);
             this.mGraphicOverlay.add(graphic);
 
@@ -360,6 +378,22 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             this.mGraphicOverlay.clear();
         }
 
+    }
+
+    public static float[][] printJoints(List<MLJoint> joints) {
+        float[][] arr = new float[14][];
+        int i = 0;
+        for (MLJoint joint : joints) {
+            float x = joint.getPointX();
+            float y = joint.getPointY();
+            float score = joint.getScore();
+            int type = joint.getType();
+            float[] jointArr = {x, y, score, type};
+            arr[i] = jointArr;
+            i++;
+        }
+        Log.d("jointy", Arrays.deepToString(arr));
+        return arr;
     }
 
     private void checkPermission() {

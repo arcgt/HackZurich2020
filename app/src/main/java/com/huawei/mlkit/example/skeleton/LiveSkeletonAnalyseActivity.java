@@ -78,6 +78,9 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     private GraphicOverlay graphicOverlay;
     private ImageView templateImgView;
     private TextView similarityTxt;
+    private TextView timerTxt;
+
+    private Thread thread;
 
     private int lensType = LensEngine.BACK_LENS;
 
@@ -112,6 +115,8 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         templateImgView = this.findViewById(R.id.template_imgView);
         templateImgView.setImageResource(R.drawable.skeleton_template);
         similarityTxt = this.findViewById(R.id.similarity_txt);
+        timerTxt = this.findViewById(R.id.timer_txt);
+
         this.createSkeletonAnalyzer();
         Button facingSwitchBtn = this.findViewById(R.id.skeleton_facingSwitch);
         if (Camera.getNumberOfCameras() == 1) {
@@ -291,6 +296,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                 float result = bundle.getFloat("similarity");
                 mainActivity.similarityTxt.setVisibility(View.VISIBLE);
                 mainActivity.similarityTxt.setText("similarity:" + (int) (result * 100) + "%");
+                mainActivity.timerTxt.setText((int) (result * 100) + "%");
             }
         }
     }

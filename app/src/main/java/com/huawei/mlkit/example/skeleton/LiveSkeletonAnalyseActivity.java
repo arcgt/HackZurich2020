@@ -55,10 +55,16 @@ import com.huawei.mlkit.example.camera.LensEnginePreview;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+
+import static java.lang.String.valueOf;
 
 public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = LiveSkeletonAnalyseActivity.class.getSimpleName();
@@ -75,12 +81,16 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
     private LensEnginePreview mPreview;
 
+    //our beautiful added content
     private GraphicOverlay graphicOverlay;
     private ImageView templateImgView;
     private TextView similarityTxt;
-    private TextView timerTxt;
+    public TextView timerTxt;
+    private Runnable gameRunner;
+    private Thread gameThread;
 
-    private Thread thread;
+    private static long startTime;
+    private static long elapsed = 0;
 
     private int lensType = LensEngine.BACK_LENS;
 
@@ -89,6 +99,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     private List<MLSkeleton> templateList;
 
     private boolean isPermissionRequested;
+
 
     private static final String[] ALL_PERMISSION =
             new String[]{
@@ -105,6 +116,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        startTime = System.currentTimeMillis();
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_live_skeleton_analyse);
         if (savedInstanceState != null) {
@@ -274,8 +286,9 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         msg.setData(bundle);
         msg.what = this.UPDATE_VIEW;
         mHandler.sendMessage(msg);
-    }
+        //        Log.d("skeleton", skeletons[0].)
 
+    }
 
     private static class MsgHandler extends Handler {
         WeakReference<LiveSkeletonAnalyseActivity> mMainActivityWeakReference;
@@ -283,6 +296,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         MsgHandler(LiveSkeletonAnalyseActivity mainActivity) {
             mMainActivityWeakReference = new WeakReference<>(mainActivity);
         }
+
 
         @Override
         public void handleMessage(Message msg) {
@@ -296,7 +310,16 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                 float result = bundle.getFloat("similarity");
                 mainActivity.similarityTxt.setVisibility(View.VISIBLE);
                 mainActivity.similarityTxt.setText("similarity:" + (int) (result * 100) + "%");
-                mainActivity.timerTxt.setText((int) (result * 100) + "%");
+
+                long newElapsed = (System.currentTimeMillis() - startTime) / 1000;
+                if (newElapsed != elapsed)
+                {
+                    elapsed = newElapsed;
+                    Log.d("michael", "elapsed"+valueOf(elapsed));
+                    int remaining = 10 - (int)(elapsed % 10);
+                    mainActivity.timerTxt.setText((remaining) + "");
+                }
+//              mainActivity.timerTxt.setText(remaining)
             }
         }
     }

@@ -95,7 +95,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     private static int points = 0;
     private static boolean isCorrectPosture = false;
     private static boolean isCorrectTranslation = false;
-
+    private static double meanSimilarity = 0;
 
     public static float[][] current_skeletons = {{416.6629f, 312.46442f, 101, 0.8042025f}, {382.3348f, 519.43396f, 102, 0.86383355f}, {381.0387f, 692.09515f, 103, 0.7551306f}
             , {659.49194f, 312.24445f, 104, 0.8305682f}, {693.5356f, 519.4844f, 105, 0.8932837f}, {694.0054f, 692.4169f, 106, 0.8742422f}
@@ -320,8 +320,12 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                 Bundle bundle = msg.getData();
                 float result = bundle.getFloat("similarity");
                 mainActivity.similarityTxt.setVisibility(View.VISIBLE);
-                mainActivity.similarityTxt.setText("similarity:" + (int) (result * 100) + "%");
+//                mainActivity.similarityTxt.setText("similarity:" + (int) (result * 100) + "%");
 
+                meanSimilarity = 0.9 * meanSimilarity + 0.1 * (result);
+                mainActivity.similarityTxt.setText("" + (int) (meanSimilarity * 100) + "%");
+
+                long currentTime = System.currentTimeMillis();
                 long newElapsed = (System.currentTimeMillis() - startTime) / 1000;
                 if (newElapsed != elapsed)
                 {
@@ -334,8 +338,6 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             }
         }
     }
-
-
 
 
     private class SkeletonAnalyzerTransactor implements MLAnalyzer.MLTransactor<MLSkeleton> {

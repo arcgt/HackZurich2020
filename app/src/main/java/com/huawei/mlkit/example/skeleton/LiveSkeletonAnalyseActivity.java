@@ -382,5 +382,18 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         dialog.show();
     }
 
+    private boolean boundCheck(float x, float top, float bot) {
+        return x > top && x < bot;
+    }
+
+    private boolean collisionCheck(MLSkeleton skeleton, float top, float bot) {
+        boolean collide = false;
+        for (MLJoint joint : skeleton.getJoints()) {
+            if (!boundCheck(joint.getPointX(), top, bot)) {
+                collide = true;
+            }
+        }
+        return collide;
+    }
 
 }

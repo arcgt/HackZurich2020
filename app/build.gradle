@@ -1,0 +1,161 @@
+apply plugin: 'com.android.application'
+
+def keystorePropertiesFile = rootProject.file("_signing/keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        // "Replace the app package name with your own app package name on AppGallery Connect (AGC).
+        //  Keep the same as the package_name in agconnect-services.json."
+        applicationId "com.huawei.hackzurich"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 2
+        versionName "2.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        // Only 64-bit binary files are reserved. If you do not need to adapt to 32-bit mobile phones,
+        // delete this configuration.
+        // ndk.abiFilters 'arm64-v8a', 'x86_64'
+    }
+
+    signingConfigs {
+        hms {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.hms
+        }
+
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.hms
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    aaptOptions {
+        noCompress "ms", "mnn", "cambricon"
+        cruncherEnabled false
+        useNewCruncher false
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.aar'])
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+
+    // Face detection SDK.
+    implementation 'com.huawei.hms:ml-computer-vision-face:2.0.1.300'
+    // Face detection model.
+    implementation 'com.huawei.hms:ml-computer-vision-face-emotion-model:2.0.1.300'
+    implementation 'com.huawei.hms:ml-computer-vision-face-feature-model:2.0.1.300'
+    implementation 'com.huawei.hms:ml-computer-vision-face-shape-point-model:2.0.1.300'
+
+    // Skeleton detection SDK.
+    implementation 'com.huawei.hms:ml-computer-vision-skeleton:2.0.2.300'
+    // Skeleton detection model.
+    implementation 'com.huawei.hms:ml-computer-vision-skeleton-model:2.0.2.300'
+
+    // Image segmentation SDK.
+    implementation 'com.huawei.hms:ml-computer-vision-segmentation:2.0.2.300'
+    // Image segmentation model.
+    implementation 'com.huawei.hms:ml-computer-vision-image-segmentation-body-model:2.0.2.300'
+    implementation 'com.huawei.hms:ml-computer-vision-image-segmentation-multiclass-model:2.0.2.300'
+
+    // Image classification SDK.
+    implementation 'com.huawei.hms:ml-computer-vision-classification:2.0.1.300'
+    // Image classification model.
+    implementation 'com.huawei.hms:ml-computer-vision-image-classification-model:2.0.1.300'
+
+    // Object detection and tracking SDK.
+    implementation 'com.huawei.hms:ml-computer-vision-object:2.0.1.302'
+    // Object detection and tracking model.
+    implementation 'com.huawei.hms:ml-computer-vision-object-detection-model:2.0.1.302'
+
+    // Text recognition SDK.
+    implementation 'com.huawei.hms:ml-computer-vision-ocr:2.0.1.300'
+    // Text recognition model.
+    implementation 'com.huawei.hms:ml-computer-vision-ocr-cn-model:2.0.1.300'
+    implementation 'com.huawei.hms:ml-computer-vision-ocr-jk-model:2.0.1.300'
+    implementation 'com.huawei.hms:ml-computer-vision-ocr-latin-model:2.0.1.300'
+
+    // Bank card recognition model, sdk, plugin.
+    implementation 'com.huawei.hms:ml-computer-card-bcr:2.0.2.300'
+
+    // ID card recognition SDK.
+    implementation 'com.huawei.hms:ml-computer-vision-icr:2.0.1.300'
+    // ID card recognition model.
+    implementation 'com.huawei.hms:ml-computer-card-icr-cn-model:2.0.1.300'
+    // ID card recognition plugin.
+    implementation('com.huawei.hms:ml-computer-card-icr-cn-plugin:2.0.1.300') {
+        // If use on-cloud ID card recognition service, you need to comment out this configuration.
+        exclude group: 'com.huawei.hms', module: 'ml-computer-net'
+        exclude group: 'com.huawei.hms', module: 'ml-computer-card-qa-plugin'
+    }
+
+    // General card recognition plugin.
+    implementation 'com.huawei.hms:ml-computer-card-gcr-plugin:2.0.1.300'
+
+    // Product vision search.
+    implementation 'com.huawei.hms:ml-computer-vision-cloud:2.0.1.300'
+
+    // Text to speech SDK.
+    implementation 'com.huawei.hms:ml-computer-voice-tts:2.0.2.300'
+
+    // Automatic speech recognition SDK.
+    implementation 'com.huawei.hms:ml-computer-voice-asr:2.0.1.300'
+    // Automatic speech recognition plugin.
+    implementation 'com.huawei.hms:ml-computer-voice-asr-plugin:2.0.1.300'
+
+    // Audio file transcription SDK.
+    implementation 'com.huawei.hms:ml-computer-voice-aft:2.0.1.300'
+
+    // Text translation SDK.
+    implementation 'com.huawei.hms:ml-computer-translate:2.0.1.300'
+    // Text translation model.
+    implementation 'com.huawei.hms:ml-computer-translate-model:2.0.1.300'
+
+    // Language detection SDK.
+    implementation 'com.huawei.hms:ml-computer-language-detection:2.0.1.300'
+    // Language detection model.
+    implementation 'com.huawei.hms:ml-computer-language-detection-model:2.0.1.300'
+
+    // handkeypoint sdk
+    implementation 'com.huawei.hms:ml-computer-vision-handkeypoint:2.0.2.300'
+    // handkeypoint model
+    implementation 'com.huawei.hms:ml-computer-vision-handkeypoint-model:2.0.2.300'
+
+    // Liveness Detection sdk
+    implementation 'com.huawei.hms:ml-computer-vision-livenessdetection:2.0.2.300'
+
+    implementation 'com.huawei.hms:ml-computer-vision-imageSuperResolution:2.0.2.300'
+    implementation 'com.huawei.hms:ml-computer-vision-imageSuperResolution-model:2.0.2.300'
+
+    // Custom model sdk
+    implementation 'com.huawei.hms:ml-computer-model-executor:2.0.2.301'
+
+    //Document skew correction
+    implementation 'com.huawei.hms:ml-computer-vision-documentskew:2.0.2.300'
+    implementation 'com.huawei.hms:ml-computer-vision-documentskew-model:2.0.2.300'
+
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+
+}
+apply plugin: 'com.huawei.agconnect'  // HUAWEI agconnect Gradle plugin
+

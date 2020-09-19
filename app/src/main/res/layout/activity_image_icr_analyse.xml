@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IDCard.IcrAnalyseActivity">
+
+    <ImageView
+        android:id="@+id/IDCard_image_front"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/card_image_front"></ImageView>
+
+    <ImageView
+        android:id="@+id/IDCard_image_back"
+        android:layout_width="500dp"
+        android:layout_height="220dp"
+        android:layout_below="@+id/IDCard_image_front"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/card_image_back"></ImageView>
+
+    <TextView
+        android:id="@+id/text_result"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/IDCard_image_back"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/upsdk_white"
+        android:textSize="13sp"></TextView>
+
+    <Button
+        android:id="@+id/detect"
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@color/upsdk_white"
+        android:text="detect"
+        android:textColor="@color/emui_color_gray_7"></Button>
+
+</RelativeLayout>

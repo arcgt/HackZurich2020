@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#000"
+        tools:context="com.huawei.mlkit.example.imgseg.ImageSegmentationStillAnalyseActivity">
+
+        <ImageView
+            android:id="@+id/image_foreground"
+            android:layout_width="500dp"
+            android:layout_height="230dp"
+            android:background="@drawable/imgseg_foreground"></ImageView>
+
+        <ImageView
+            android:id="@+id/image_result"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/image_foreground"
+            android:layout_width="500dp"
+            android:layout_height="300dp"></ImageView>
+
+        <Button
+            android:id="@+id/segment_detect"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:background="@color/upsdk_white"
+            android:text="detect"
+            android:textColor="@color/emui_color_gray_7"></Button>
+</RelativeLayout>

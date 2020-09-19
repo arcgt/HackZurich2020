@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/top_layout_face"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_face_live"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:text="Live Face"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_face_image"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:text="Image Face"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_skeleton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_skeleton_live"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="LIVE SKELETON"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_skeleton_image"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="IMAGE SKELETON"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_handkeypoint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_handkeypoint_live"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="LIVE HANDKEYPOINT"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_handkeypoint_still"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="STILL HANDKEYPOINT"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_imgseg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_imgseg_live"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="live imgseg"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_imgseg_image"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="image imgseg"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_object"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Object"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_classification"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Classification"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_productvisionsearch"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="product search"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_landmark"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Landmark">
+                android:textSize="13sp">
+            </Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_text"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Text"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_document"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Document"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_icr"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="ID Card"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_gcr"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="General Card"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_bcr"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Bank Card"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_translate"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Translate"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_tts"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="TTS"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_asr"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="ASR"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_audio2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_aft"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="AFT"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_custom_model"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Custom Model"
+                android:textSize="13sp"></Button>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_liveness_detection"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="Liveness Detect"
+                android:textSize="13sp"></Button>
+
+            <Button
+                android:id="@+id/btn_imageSuper_resolution"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="ImageSuper"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/top_layout_5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="20dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_documentSkewCorrection"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_weight="1"
+                android:text="ImageRefine"
+                android:textSize="13sp"></Button>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

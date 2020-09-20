@@ -27,7 +27,7 @@
         <activity
             android:name="com.huawei.mlkit.example.livenessdetection.LiveLivenessDetectionActivity"
             android:label="@string/title_activity_liveness_detection"
-            android:theme="@style/NoActionBar"></activity>
+            android:theme="@style/NoActionBar" />
         <activity
             android:name="com.huawei.mlkit.example.document.ImageDocumentAnalyseActivity"
             android:screenOrientation="portrait" />
@@ -93,7 +93,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.huawei.mlkit.example.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.huawei.mlkit.example.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

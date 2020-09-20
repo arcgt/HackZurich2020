@@ -95,12 +95,10 @@
         android:textSize="80dp" />
 
 
-
-
     <ImageView
         android:id="@+id/template_imgView"
-        android:layout_width="168dp"
-        android:layout_height="214dp"
+        android:layout_width="299dp"
+        android:layout_height="351dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:scaleType="fitStart"

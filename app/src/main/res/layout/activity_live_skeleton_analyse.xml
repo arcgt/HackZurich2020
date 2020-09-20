@@ -76,20 +76,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="Hello"
+        android:text="= ?"
         android:textColor="#ffffff"
-        android:textSize="100dp"
+        android:textSize="80dp"
         android:visibility="visible"/>
 
     <TextView
         android:id="@+id/word_txt"
         android:layout_width="match_parent"
-        android:layout_height="558dp"
+        android:layout_height="470dp"
         android:gravity="center"
         android:text="你好"
         android:textColor="#ffffff"
-        android:textSize="100dp"
-        android:visibility="visible"/>
+        android:textSize="80dp"
+        android:visibility="visible" />
 
 
     <ImageView

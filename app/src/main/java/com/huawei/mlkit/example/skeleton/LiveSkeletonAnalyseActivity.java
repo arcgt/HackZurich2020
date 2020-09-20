@@ -365,19 +365,22 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                             mainActivity.redBox.setVisibility(View.VISIBLE);
                         }
                         mainActivity.translationTxt.setVisibility(View.VISIBLE);
-                    } else if (remaining == 9) {
+                        mainActivity.timerTxt.setVisibility(View.INVISIBLE);
+                    } else if (remaining == 8) {
                         //display next round
+                        mainActivity.timerTxt.setVisibility(View.VISIBLE);
                         Random Dice = new Random();
                         int n = Dice.nextInt(words.length);
                         currentWord = words[n];
                         currentTranslation = translations[n];
-                        mainActivity.wordTxt.setText("currentWord");
-                        mainActivity.translationTxt.setText("currentTranslation");
+                        mainActivity.wordTxt.setText(currentWord);
+                        mainActivity.translationTxt.setText("= "+currentTranslation);
 
                         //clear backgrounds
                         mainActivity.redBox.setVisibility(View.GONE);
                         mainActivity.greenBox.setVisibility(View.GONE);
                         mainActivity.translationTxt.setVisibility(View.GONE);
+
 
                     }
                 }

@@ -129,9 +129,14 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             , {521.47363f, 103.95903f, 113, 0.7780853f}, {521.6231f, 277.2533f, 114, 0.7745689f}};
 
     public static float[][] STAR = {{267.93414f, 430.5351f, 101, 0.71240234f}, {194.80865f, 362.83948f, 102, 0.75878906f}, {133.88184f, 321.79745f, 103, 0.6669922f}, {412.56152f, 430.62805f, 104, 0.6621094f}, {476.8604f, 375.45895f, 105, 0.6743164f}, {523.6869f, 326.43134f, 106, 0.8339844f}, {304.07794f, 648.6727f, 107, 0.8046875f}, {267.49435f, 789.0001f, 108, 0.8574219f}, {230.68094f, 908.1598f, 109, 0.77685547f}, {386.41693f, 652.2744f, 110, 0.6879883f}, {449.47095f, 772.23486f, 111, 0.7841797f}, {487.23895f, 942.85864f, 112, 0.74316406f}, {339.87183f, 347.94504f, 113, 0.82910156f}, {339.92133f, 434.43668f, 114, 0.7841797f}};
-
+    public static float [][] STRETCH = {{375.86508f, 398.63742f, 101, 0.6821289f}, {340.63196f, 326.695f, 102, 0.8129883f}, {377.36285f, 253.75702f, 103, 0.83447266f}, {450.59836f, 399.2226f, 104, 0.6953125f}, {486.68945f, 327.2224f, 105, 0.6640625f}, {449.75684f, 254.70863f, 106, 0.7338867f}, {340.04782f, 688.4221f, 107, 0.6982422f}, {193.58167f, 761.15967f, 108, 0.72998047f}, {340.75992f, 834.72485f, 109, 0.8105469f}, {449.2434f, 689.87177f, 110, 0.6816406f}, {414.25717f, 892.3572f, 111, 0.69873047f}, {413.52863f, 1087.6544f, 112, 0.79345703f}, {413.2946f, 290.76166f, 113, 0.8276367f}, {412.85678f, 398.986f, 114, 0.8232422f}};
+    public static float [][] TILT = {{267.0674f, 616.7778f, 101, 0.31152344f}, {266.86255f, 725.74677f, 102, 0.32861328f}, {267.0623f, 871.03f, 103, 0.43286133f}, {267.98602f, 616.84106f, 104, 0.54296875f}, {266.6856f, 726.05194f, 105, 0.2861328f}, {266.56757f, 835.08636f, 106, 0.25610352f}, {377.59976f, 688.79f, 107, 0.5683594f}, {340.1589f, 762.7306f, 108, 0.52441406f}, {266.84937f, 907.17236f, 109, 0.29882812f}, {450.69153f, 617.6101f, 110, 0.5839844f}, {558.3581f, 797.3463f, 111, 0.6977539f}, {595.7693f, 907.8295f, 112, 0.7949219f}, {157.47375f, 617.67816f, 113, 0.47705078f}, {230.66676f, 616.56104f, 114, 0.68115234f}};
+    public static float [][] LEG = {{375.98724f, 436.19708f, 101, 0.69140625f}, {275.08008f, 471.16504f, 102, 0.62060547f}, {212.21176f, 471.15863f, 103, 0.6279297f}, {448.88525f, 471.62115f, 104, 0.7260742f}, {487.09628f, 435.8158f, 105, 0.67529297f}, {559.29065f, 398.97745f, 106, 0.72802734f}, {267.96436f, 579.9413f, 107, 0.6748047f}, {165.25621f, 544.99615f, 108, 0.53808594f}, {0.0f, 0.0f, 109, 0.0f}, {339.69293f, 617.01965f, 110, 0.78515625f}, {304.60822f, 726.1819f, 111, 0.7495117f}, {304.4248f, 852.19824f, 112, 0.7050781f}, {414.32184f, 398.63525f, 113, 0.75439453f}, {412.8252f, 436.2071f, 114, 0.7792969f}};
     public static ArrayList<List<MLSkeleton>> skeletonTemplates;
-    public static float[][][] skeleton_data = {STAR, TMP_SKELETONS};
+    public static float[][][] skeleton_data = {STAR, STRETCH, TILT, LEG};
+
+   // public static float[][][] skeleton_data = {STAR, STRETCH, TILT, LEG, DOWN};
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,7 +149,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         this.mPreview = this.findViewById(R.id.skeleton_preview);
         this.graphicOverlay = this.findViewById(R.id.skeleton_overlay);
         templateImgView = this.findViewById(R.id.template_imgView);
-        templateImgView.setImageResource(R.drawable.skeleton_template);
+        templateImgView.setImageResource(R.drawable.star);
         similarityTxt = this.findViewById(R.id.similarity_txt);
         timerTxt = this.findViewById(R.id.timer_txt);
         wordTxt = this.findViewById(R.id.word_txt);
@@ -416,7 +421,26 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                         mainActivity.translationTxt.setVisibility(View.GONE);
 
                         //change current skeleton template
-                        currentSkeletons = skeletonTemplates.get(0);
+                        int q = Dice.nextInt(5);
+                        if (q == 0) {
+                            currentSkeletons = skeletonTemplates.get(0);
+                            mainActivity.templateImgView.setImageResource(R.drawable.star);
+                        }
+                        else if (q == 1)
+                        {
+                            currentSkeletons = skeletonTemplates.get(1);
+                            mainActivity.templateImgView.setImageResource(R.drawable.stretch);
+                        }
+                        else if (q == 2)
+                        {
+                            currentSkeletons = skeletonTemplates.get(2);
+                            mainActivity.templateImgView.setImageResource(R.drawable.tilt);
+                        }
+                        else if (q == 3)
+                        {
+                            currentSkeletons = skeletonTemplates.get(3);
+                            mainActivity.templateImgView.setImageResource(R.drawable.leg);
+                        }
                     }
                 }
 //              mainActivity.timerTxt.setText(remaining)
@@ -479,7 +503,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             arr[i] = jointArr;
             i++;
         }
-        Log.d("jointy", Arrays.deepToString(arr).replace('[', '{').replace(']' ,'}'));
+        Log.d("ttt", Arrays.deepToString(arr).replace('[', '{').replace(']' ,'}'));
         return arr;
     }
 

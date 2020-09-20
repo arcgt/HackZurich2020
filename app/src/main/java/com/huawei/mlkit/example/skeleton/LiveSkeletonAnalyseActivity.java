@@ -139,6 +139,11 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             , {623.7807f, 726.7474f, 110, 0.5483011f}, {624.5828f, 936.3222f, 111, 0.730425f}, {625.81915f, 1212.2491f, 112, 0.72417295f}
             , {521.47363f, 103.95903f, 113, 0.7780853f}, {521.6231f, 277.2533f, 114, 0.7745689f}};
 
+    public static float[][] STAR = {{267.93414f, 430.5351f, 101, 0.71240234f}, {194.80865f, 362.83948f, 102, 0.75878906f}, {133.88184f, 321.79745f, 103, 0.6669922f}, {412.56152f, 430.62805f, 104, 0.6621094f}, {476.8604f, 375.45895f, 105, 0.6743164f}, {523.6869f, 326.43134f, 106, 0.8339844f}, {304.07794f, 648.6727f, 107, 0.8046875f}, {267.49435f, 789.0001f, 108, 0.8574219f}, {230.68094f, 908.1598f, 109, 0.77685547f}, {386.41693f, 652.2744f, 110, 0.6879883f}, {449.47095f, 772.23486f, 111, 0.7841797f}, {487.23895f, 942.85864f, 112, 0.74316406f}, {339.87183f, 347.94504f, 113, 0.82910156f}, {339.92133f, 434.43668f, 114, 0.7841797f}};
+
+
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         startTime = System.currentTimeMillis();
@@ -432,19 +437,19 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
     }
 
-    public static float[][] printJoints(List<MLJoint> joints) {
-        float[][] arr = new float[14][];
+    public static String[][] printJoints(List<MLJoint> joints) {
+        String[][] arr = new String[14][];
         int i = 0;
         for (MLJoint joint : joints) {
             float x = joint.getPointX();
             float y = joint.getPointY();
             float score = joint.getScore();
             int type = joint.getType();
-            float[] jointArr = {x, y, score, type};
+            String[] jointArr = {String.valueOf(x) + 'f', String.valueOf(y) + 'f', String.valueOf(type), String.valueOf(score) + 'f'};
             arr[i] = jointArr;
             i++;
         }
-        Log.d("jointy", Arrays.deepToString(arr));
+        Log.d("jointy", Arrays.deepToString(arr).replace('[', '{').replace(']' ,'}'));
         return arr;
     }
 

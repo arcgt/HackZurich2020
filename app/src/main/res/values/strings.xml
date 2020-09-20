@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">mlkit_example</string>
+    <string name="app_name">Fitfit</string>
     <string name="toast">Grant the permission to experience the function.</string>
     <string name="Information_permission">Obtaining related permissions: Camera permissions failed. Some functions cannot be used properly. You need to manually grant permissions on the settings page. </string>
     <string name="go_authorization">Go Authorization</string>

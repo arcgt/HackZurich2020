@@ -17,6 +17,7 @@
 package com.huawei.mlkit.example.skeleton;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.Settings;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
@@ -43,6 +45,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.huawei.hms.mlplugin.asr.MLAsrCaptureConstants;
+import com.huawei.hms.mlsdk.asr.MLAsrRecognizer;
 import com.huawei.hms.mlsdk.common.LensEngine;
 import com.huawei.hms.mlsdk.common.MLAnalyzer;
 import com.huawei.hms.mlsdk.skeleton.MLJoint;
@@ -50,6 +54,8 @@ import com.huawei.hms.mlsdk.skeleton.MLSkeleton;
 import com.huawei.hms.mlsdk.skeleton.MLSkeletonAnalyzer;
 import com.huawei.hms.mlsdk.skeleton.MLSkeletonAnalyzerFactory;
 import com.huawei.hackzurich.R;
+import com.huawei.mlkit.example.MainActivity;
+import com.huawei.mlkit.example.asr.AsrAnalyseActivity;
 import com.huawei.mlkit.example.camera.GraphicOverlay;
 import com.huawei.mlkit.example.camera.LensEnginePreview;
 
@@ -60,6 +66,14 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
+// speech
+
+import com.huawei.hms.mlsdk.asr.MLAsrConstants;
+import com.huawei.hms.mlsdk.asr.MLAsrListener;
+import com.huawei.hms.mlsdk.asr.MLAsrRecognizer;
+import com.huawei.hms.mlsdk.common.MLApplication;
 
 import static java.lang.String.valueOf;
 
@@ -105,6 +119,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     private static String[] words = {"你好","快乐","强"};
     private static String[] translations = {"hello", "happy", "strong"};
 
+    private static boolean correctTranslation = false;
 
     private int lensType = LensEngine.BACK_LENS;
 
@@ -137,6 +152,18 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
    // public static float[][][] skeleton_data = {STAR, STRETCH, TILT, LEG, DOWN};
 
+    // speech
+    private static final int HANDLE_CODE = 0;
+    private static final String HANDLE_KEY = "text";
+    private static final int AUDIO_PERMISSION_CODE = 1;
+    private static final int ML_ASR_CAPTURE_CODE = 2;
+    private TextView wordTextView;
+    public TextView speechWordTxt;
+    private MLAsrRecognizer mSpeechRecognizer;
+
+
+
+    public String[] vocabulary_list = {"the", "quick", "brown", "fox", "hello", "world", "hack"};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -156,6 +183,8 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         translationTxt = this.findViewById(R.id.translation_txt);
         redBox = this.findViewById(R.id.red);
         greenBox = this.findViewById(R.id.green);
+        wordTextView = this.findViewById(R.id.word_txt_view);
+        speechWordTxt = this.findViewById(R.id.speech_txt_view);
 
         //halfGreenBox = this.findViewById(R.id.half_green);
 
@@ -174,7 +203,83 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         } else {
             this.checkPermission();
         }
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            this.requestAudioPermission();
+        }
     }
+
+    private void requestAudioPermission() {
+        final String[] permissions = new String[]{Manifest.permission.RECORD_AUDIO};
+        if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.RECORD_AUDIO)) {
+            ActivityCompat.requestPermissions(this, permissions, LiveSkeletonAnalyseActivity.AUDIO_PERMISSION_CODE);
+            return;
+        }
+    }
+
+    // Use the callback to implement the MLAsrListener API and methods in the API.
+    protected class SpeechRecognitionListener implements MLAsrListener {
+        //this.word = word;
+        String word = "TRANSLATE NOW!";
+        SpeechRecognitionListener(String word) {
+            this.word = word;
+
+        }
+
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onStartingOfSpeech() {
+           // wordTextView.setText(this.word);
+            Log.v("currentWord",this.word);
+            // The user starts to speak, that is, the speech recognizer detects that the user starts to speak.
+        }
+
+        @Override
+        public void onVoiceDataReceived(byte[] data, float energy, Bundle bundle) {
+            // Return the original PCM stream and audio power to the user.
+        }
+
+        @Override
+        public void onState(int i, Bundle bundle) {
+            // Notify the app status change.
+        }
+
+        @Override
+        public void onRecognizingResults(Bundle partialResults) {
+            // Receive the recognized text from MLAsrRecognizer.
+
+            String partial_voice_res = partialResults.getString(MLAsrRecognizer.RESULTS_RECOGNIZING);
+            if (partial_voice_res.toLowerCase().contains(this.word.toLowerCase())) {
+                speechWordTxt.setText("THATS CORRECT!");
+                correctTranslation = true;
+                Log.v("CORRECT", "THATS CORRECT!");
+
+            }
+            else {
+                speechWordTxt.setText(partial_voice_res);
+                Log.v("VOICE", partial_voice_res);
+            }
+        }
+
+        @Override
+        public void onResults(Bundle results) {
+            // Text data of ASR.
+            //speechWordTxt.setText(results.getString(MLAsrRecognizer.RESULTS_RECOGNIZED));
+        }
+
+        @Override
+        public void onError(int error, String errorMessage) {
+            // Called when an error occurs in recognition.
+            speechWordTxt.setText(error + errorMessage);
+        }
+
+        @Override
+        public void onStartListening() {
+            // The recorder starts to receive speech.
+          //  wordTextView.setText(this.word);
+        }
+    }
+
 
     @Override
     protected void onResume() { 
@@ -303,38 +408,6 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         currentSkeletons = skeletonTemplates.get(0);
     }
 
-//    private void initTemplateData() {
-//        if (templateList != null) {
-//            return;
-//        }
-//
-//        List<MLJoint> mlJointList = new ArrayList<>();
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.skeleton_template);
-//        for (int i = 0; i < TMP_SKELETONS.length; i++) {
-//            MLJoint mlJoint = new MLJoint(bitmap.getWidth() * TMP_SKELETONS[i][0],
-//                    bitmap.getHeight() * TMP_SKELETONS[i][1], (int)TMP_SKELETONS[i][2], TMP_SKELETONS[i][3]);
-//            mlJointList.add(mlJoint);
-//        }
-//
-//        templateList = new ArrayList<>();
-//        templateList.add(new MLSkeleton(mlJointList));
-//        //
-//    }
-//
-//    public void setSkeletonsTemplate(float[][] skeletons)
-//    {
-//        List<MLJoint> mlJointList = new ArrayList<>();
-//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.skeleton_template);
-//        for (int i = 0; i < skeletons.length; i++) {
-//            MLJoint mlJoint = new MLJoint(bitmap.getWidth() * skeletons[i][0],
-//                    bitmap.getHeight() * skeletons[i][1], (int)skeletons[i][2], skeletons[i][3]);
-//            mlJointList.add(mlJoint);
-//        }
-//
-//        templateList = new ArrayList<>();
-//        templateList.add(new MLSkeleton(mlJointList));
-//    }
-
     /**
      * Compute Similarity
      *
@@ -397,7 +470,10 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
                         //TODO add correct sound
                         //calculate and display results
-                        if (meanSimilarity >= 0.5) {
+                        if (correctTranslation){
+                            mainActivity.greenBox.setVisibility(View.VISIBLE);
+                        }
+                        else if (meanSimilarity >= 0.5) {
                             //correct posture
                             mainActivity.greenBox.setVisibility(View.VISIBLE);
                         } else {
@@ -408,6 +484,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                         mainActivity.timerTxt.setVisibility(View.INVISIBLE);
                     } else if (remaining == 8) {
                         //display next round
+                        correctTranslation = false;
                         mainActivity.timerTxt.setVisibility(View.VISIBLE);
                         Random Dice = new Random();
                         int n = Dice.nextInt(words.length);
@@ -419,6 +496,12 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                         mainActivity.redBox.setVisibility(View.GONE);
                         mainActivity.greenBox.setVisibility(View.GONE);
                         mainActivity.translationTxt.setVisibility(View.GONE);
+
+                        int s = Dice.nextInt(mainActivity.vocabulary_list.length);
+                        //String currentWord = mainActivity.vocabulary_list[s];
+
+                        mainActivity.newWord(currentTranslation);
+                        mainActivity.speechWordTxt.setText("");
 
                         //change current skeleton template
                         int q = Dice.nextInt(5);
@@ -472,9 +555,6 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             }
             // Remove invalid point.
             List<MLSkeleton> skeletons = SkeletonUtils.getValidSkeletons(list);
-//            Log.d("skelly", "skeleton");
-//          Log.d("skeleton", Arrays.toString(list.toArray(list)));
-
             SkeletonGraphic graphic = new SkeletonGraphic(this.mGraphicOverlay, skeletons);
             this.mGraphicOverlay.add(graphic);
 
@@ -505,6 +585,29 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         }
         Log.d("ttt", Arrays.deepToString(arr).replace('[', '{').replace(']' ,'}'));
         return arr;
+    }
+
+    private void newWord(String word) {
+        mSpeechRecognizer = MLAsrRecognizer.createAsrRecognizer(this);
+        // Set the ASR result listener callback. You can obtain the ASR result or result code from the listener.
+        mSpeechRecognizer.setAsrListener(new LiveSkeletonAnalyseActivity.SpeechRecognitionListener(word));
+
+        // Set ApiKey.
+        MLApplication.getInstance().setApiKey(MainActivity.apiKey);
+
+        Intent intentSdk = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                // Set the language that can be recognized to English. If this parameter is not set,
+                // English is recognized by default. Example: MLAsrConstants.LAN_ZH_CN: Chinese, MLAsrConstants.LAN_EN_US: English, MLAsrConstants.LAN_FR_FR: French.
+                // MLAsrConstants.LAN_ES_ES: Spanish. MLAsrConstants.LAN_DE_DE: German.
+                .putExtra(MLAsrCaptureConstants.LANGUAGE, MLAsrConstants.LAN_EN_US)
+                // Set to return the recognition result along with the speech. If you ignore the setting, this mode is used by default. Options are as follows:
+                // MLAsrConstants.FEATURE_WORDFLUX: Recognizes and returns texts through onRecognizingResults.
+                // MLAsrConstants.FEATURE_ALLINONE: After the recognition is complete, texts are returned through onResults.
+                //.putExtra(MLAsrConstants.FEATURE, MLAsrConstants.FEATURE_ALLINONE);
+                .putExtra(MLAsrConstants.FEATURE, MLAsrConstants.FEATURE_WORDFLUX);
+        //wordTextView.setText("Get Ready!");
+        mSpeechRecognizer.startRecognizing(intentSdk);
+
     }
 
     private void checkPermission() {
@@ -554,20 +657,6 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         });
         dialog.setCancelable(false);
         dialog.show();
-    }
-
-    private boolean boundCheck(float x, float top, float bot) {
-        return x > top && x < bot;
-    }
-
-    private boolean collisionCheck(MLSkeleton skeleton, float top, float bot) {
-        boolean collide = false;
-        for (MLJoint joint : skeleton.getJoints()) {
-            if (!boundCheck(joint.getPointX(), top, bot)) {
-                collide = true;
-            }
-        }
-        return collide;
     }
 
 }

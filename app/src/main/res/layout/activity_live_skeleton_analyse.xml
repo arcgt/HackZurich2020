@@ -94,11 +94,32 @@
         android:textColor="#ffffff"
         android:textSize="80dp" />
 
+    <TextView
+        android:id="@+id/word_txt_view"
+        android:layout_width="363dp"
+        android:layout_height="129dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="180dp"
+        android:text=""
+        android:textColor="#ffffff"
+        android:textSize="40dp" />
+
+    <TextView
+        android:id="@+id/speech_txt_view"
+        android:layout_width="363dp"
+        android:layout_height="88dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="310dp"
+        android:text=""
+        android:textColor="#ffffff"
+        android:textSize="40dp" />
+
+
 
     <ImageView
         android:id="@+id/template_imgView"
-        android:layout_width="299dp"
-        android:layout_height="351dp"
+        android:layout_width="264dp"
+        android:layout_height="319dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:scaleType="fitStart"

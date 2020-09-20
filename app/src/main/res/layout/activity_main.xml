@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:id="@+id/top_layout_face"
             android:layout_width="match_parent"
@@ -18,7 +19,8 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="30dp"
             android:layout_marginRight="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="gone">
 
             <Button
                 android:id="@+id/btn_face_live"
@@ -27,7 +29,9 @@
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
                 android:text="Live Face"
-                android:textSize="13sp"></Button>
+
+                android:textSize="13sp"
+                android:visibility="gone"></Button>
 
             <Button
                 android:id="@+id/btn_face_image"
@@ -36,7 +40,8 @@
                 android:layout_marginTop="15dp"
                 android:layout_weight="1"
                 android:text="Image Face"
-                android:textSize="13sp"></Button>
+                android:textSize="13sp"
+                android:visibility="gone"></Button>
         </LinearLayout>
 
         <LinearLayout
@@ -46,20 +51,23 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
             android:layout_marginRight="20dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <Button
                 android:id="@+id/btn_skeleton_live"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:visibility="visible"
                 android:layout_weight="1"
-                android:text="LIVE SKELETON"
+                android:text="Start Fit Fit"
                 android:textSize="13sp"></Button>
 
             <Button
                 android:id="@+id/btn_skeleton_image"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:text="IMAGE SKELETON"
                 android:textSize="13sp"></Button>
@@ -79,6 +87,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:text="LIVE HANDKEYPOINT"
                 android:textSize="13sp"></Button>
 
@@ -87,6 +96,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:text="STILL HANDKEYPOINT"
                 android:textSize="13sp"></Button>
         </LinearLayout>
@@ -103,6 +113,7 @@
             <Button
                 android:id="@+id/btn_imgseg_live"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="50sp"
                 android:layout_weight="1"
                 android:text="live imgseg"
@@ -112,6 +123,7 @@
                 android:id="@+id/btn_imgseg_image"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:text="image imgseg"
                 android:textSize="13sp"></Button>
@@ -130,6 +142,7 @@
                 android:id="@+id/btn_object"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:text="Object"
                 android:textSize="13sp"></Button>
@@ -137,6 +150,7 @@
             <Button
                 android:id="@+id/btn_classification"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="50sp"
                 android:layout_weight="1"
                 android:text="Classification"
@@ -156,6 +170,7 @@
                 android:id="@+id/btn_productvisionsearch"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:text="product search"
                 android:textSize="13sp"></Button>
@@ -164,8 +179,9 @@
                 android:id="@+id/btn_landmark"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:visibility="gone"
                 android:layout_weight="1"
-                android:text="Landmark">
+                android:text="Landmark"
                 android:textSize="13sp">
             </Button>
         </LinearLayout>
@@ -184,6 +200,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:text="Text"
                 android:textSize="13sp"></Button>
 
@@ -191,6 +208,7 @@
                 android:id="@+id/btn_document"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:text="Document"
                 android:textSize="13sp"></Button>
@@ -208,6 +226,7 @@
             <Button
                 android:id="@+id/btn_icr"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="50sp"
                 android:layout_weight="1"
                 android:text="ID Card"
@@ -218,6 +237,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:text="General Card"
                 android:textSize="13sp"></Button>
         </LinearLayout>
@@ -234,6 +254,7 @@
             <Button
                 android:id="@+id/btn_bcr"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="50sp"
                 android:layout_weight="1"
                 android:text="Bank Card"
@@ -243,6 +264,7 @@
                 android:id="@+id/btn_translate"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:text="Translate"
                 android:textSize="13sp"></Button>
@@ -260,6 +282,7 @@
             <Button
                 android:id="@+id/btn_tts"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="50sp"
                 android:layout_weight="1"
                 android:text="TTS"
@@ -270,6 +293,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_weight="1"
+                android:visibility="gone"
                 android:text="ASR"
                 android:textSize="13sp"></Button>
         </LinearLayout>
@@ -286,6 +310,7 @@
             <Button
                 android:id="@+id/btn_aft"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="50sp"
                 android:layout_weight="1"
                 android:text="AFT"
@@ -293,6 +318,7 @@
 
             <Button
                 android:id="@+id/btn_custom_model"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
                 android:layout_weight="1"
@@ -313,6 +339,7 @@
             <Button
                 android:id="@+id/btn_liveness_detection"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="50sp"
                 android:layout_weight="1"
                 android:text="Liveness Detect"
@@ -322,6 +349,7 @@
                 android:id="@+id/btn_imageSuper_resolution"
                 android:layout_width="match_parent"
                 android:layout_height="50sp"
+                android:visibility="gone"
                 android:layout_weight="1"
                 android:text="ImageSuper"
                 android:textSize="13sp"></Button>
@@ -339,10 +367,12 @@
             <Button
                 android:id="@+id/btn_documentSkewCorrection"
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="50sp"
                 android:layout_weight="1"
                 android:text="ImageRefine"
                 android:textSize="13sp"></Button>
         </LinearLayout>
     </LinearLayout>
+
 </androidx.core.widget.NestedScrollView>

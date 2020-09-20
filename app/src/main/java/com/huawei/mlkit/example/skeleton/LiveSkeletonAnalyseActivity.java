@@ -55,13 +55,9 @@ import com.huawei.mlkit.example.camera.LensEnginePreview;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -110,18 +106,11 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     private static String[] translations = {"hello", "happy", "strong"};
 
 
-
-    public static float[][] current_skeletons = {{416.6629f, 312.46442f, 101, 0.8042025f}, {382.3348f, 519.43396f, 102, 0.86383355f}, {381.0387f, 692.09515f, 103, 0.7551306f}
-            , {659.49194f, 312.24445f, 104, 0.8305682f}, {693.5356f, 519.4844f, 105, 0.8932837f}, {694.0054f, 692.4169f, 106, 0.8742422f}
-            , {485.08786f, 726.8787f, 107, 0.6004682f}, {485.02808f, 935.4897f, 108, 0.7334503f}, {485.09384f, 1177.127f, 109, 0.67240065f}
-            , {623.7807f, 726.7474f, 110, 0.5483011f}, {624.5828f, 936.3222f, 111, 0.730425f}, {625.81915f, 1212.2491f, 112, 0.72417295f}
-            , {521.47363f, 103.95903f, 113, 0.7780853f}, {521.6231f, 277.2533f, 114, 0.7745689f}};
-
     private int lensType = LensEngine.BACK_LENS;
 
     private boolean isFront = false;
 
-    private List<MLSkeleton> templateList;
+    private static List<MLSkeleton> currentSkeletons;
 
     private boolean isPermissionRequested;
 
@@ -141,8 +130,8 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
     public static float[][] STAR = {{267.93414f, 430.5351f, 101, 0.71240234f}, {194.80865f, 362.83948f, 102, 0.75878906f}, {133.88184f, 321.79745f, 103, 0.6669922f}, {412.56152f, 430.62805f, 104, 0.6621094f}, {476.8604f, 375.45895f, 105, 0.6743164f}, {523.6869f, 326.43134f, 106, 0.8339844f}, {304.07794f, 648.6727f, 107, 0.8046875f}, {267.49435f, 789.0001f, 108, 0.8574219f}, {230.68094f, 908.1598f, 109, 0.77685547f}, {386.41693f, 652.2744f, 110, 0.6879883f}, {449.47095f, 772.23486f, 111, 0.7841797f}, {487.23895f, 942.85864f, 112, 0.74316406f}, {339.87183f, 347.94504f, 113, 0.82910156f}, {339.92133f, 434.43668f, 114, 0.7841797f}};
 
-
-
+    public static ArrayList<List<MLSkeleton>> skeletonTemplates;
+    public static float[][][] skeleton_data = {STAR, TMP_SKELETONS};
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -284,21 +273,62 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         this.startLensEngine();
     }
 
+
     private void initTemplateData() {
-        if (templateList != null) {
+        if (skeletonTemplates != null) {
             return;
         }
-        List<MLJoint> mlJointList = new ArrayList<>();
-        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.skeleton_template);
-        for (int i = 0; i < TMP_SKELETONS.length; i++) {
-            MLJoint mlJoint = new MLJoint(bitmap.getWidth() * TMP_SKELETONS[i][0],
-                    bitmap.getHeight() * TMP_SKELETONS[i][1], (int)TMP_SKELETONS[i][2], TMP_SKELETONS[i][3]);
-            mlJointList.add(mlJoint);
-        }
 
-        templateList = new ArrayList<>();
-        templateList.add(new MLSkeleton(mlJointList));
+        skeletonTemplates = new ArrayList<>();
+        for (int j = 0; j < skeleton_data.length; j++)
+        {
+            List<MLJoint> mlJointList = new ArrayList<>();
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.skeleton_template);
+
+            for (int i = 0; i < skeleton_data[j].length; i++) {
+                MLJoint mlJoint = new MLJoint(bitmap.getWidth() * skeleton_data[j][i][0],
+                        bitmap.getHeight() * skeleton_data[j][i][1], (int)skeleton_data[j][i][2], skeleton_data[j][i][3]);
+                mlJointList.add(mlJoint);
+            }
+
+            ArrayList<MLSkeleton> tempList = new ArrayList<>();
+            tempList.add(new MLSkeleton(mlJointList));
+            skeletonTemplates.add(tempList);
+        }
+        currentSkeletons = skeletonTemplates.get(0);
     }
+
+//    private void initTemplateData() {
+//        if (templateList != null) {
+//            return;
+//        }
+//
+//        List<MLJoint> mlJointList = new ArrayList<>();
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.skeleton_template);
+//        for (int i = 0; i < TMP_SKELETONS.length; i++) {
+//            MLJoint mlJoint = new MLJoint(bitmap.getWidth() * TMP_SKELETONS[i][0],
+//                    bitmap.getHeight() * TMP_SKELETONS[i][1], (int)TMP_SKELETONS[i][2], TMP_SKELETONS[i][3]);
+//            mlJointList.add(mlJoint);
+//        }
+//
+//        templateList = new ArrayList<>();
+//        templateList.add(new MLSkeleton(mlJointList));
+//        //
+//    }
+//
+//    public void setSkeletonsTemplate(float[][] skeletons)
+//    {
+//        List<MLJoint> mlJointList = new ArrayList<>();
+//        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.skeleton_template);
+//        for (int i = 0; i < skeletons.length; i++) {
+//            MLJoint mlJoint = new MLJoint(bitmap.getWidth() * skeletons[i][0],
+//                    bitmap.getHeight() * skeletons[i][1], (int)skeletons[i][2], skeletons[i][3]);
+//            mlJointList.add(mlJoint);
+//        }
+//
+//        templateList = new ArrayList<>();
+//        templateList.add(new MLSkeleton(mlJointList));
+//    }
 
     /**
      * Compute Similarity
@@ -306,12 +336,12 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
      * @param skeletons
      */
     private void compareSimilarity(List<MLSkeleton> skeletons) {
-        if (templateList == null) {
+        if (currentSkeletons == null) {
             return;
         }
 
         float similarity = 0f;
-        float result = analyzer.caluteSimilarity(skeletons, templateList);
+        float result = analyzer.caluteSimilarity(skeletons, currentSkeletons);
         if (result > similarity) {
             similarity = result;
         }
@@ -380,13 +410,13 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                         currentTranslation = translations[n];
                         mainActivity.wordTxt.setText(currentWord);
                         mainActivity.translationTxt.setText("= "+currentTranslation);
-
                         //clear backgrounds
                         mainActivity.redBox.setVisibility(View.GONE);
                         mainActivity.greenBox.setVisibility(View.GONE);
                         mainActivity.translationTxt.setVisibility(View.GONE);
 
-
+                        //change current skeleton template
+                        currentSkeletons = skeletonTemplates.get(0);
                     }
                 }
 //              mainActivity.timerTxt.setText(remaining)

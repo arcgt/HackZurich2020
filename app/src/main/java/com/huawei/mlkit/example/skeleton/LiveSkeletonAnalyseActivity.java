@@ -63,6 +63,7 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import static java.lang.String.valueOf;
 
@@ -86,6 +87,13 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     private ImageView templateImgView;
     private TextView similarityTxt;
     public TextView timerTxt;
+    public TextView wordTxt;
+    public TextView translationTxt;
+
+    private TextView redBox;
+    private TextView greenBox;
+    private TextView halfGreenBox;
+
     private Runnable gameRunner;
     private Thread gameThread;
 
@@ -96,6 +104,12 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     private static boolean isCorrectPosture = false;
     private static boolean isCorrectTranslation = false;
     private static double meanSimilarity = 0;
+    private static String currentWord = "你好";
+    private static String currentTranslation = "Hello";
+    private static String[] words = {"你好","快乐","强"};
+    private static String[] translations = {"hello", "happy", "strong"};
+
+
 
     public static float[][] current_skeletons = {{416.6629f, 312.46442f, 101, 0.8042025f}, {382.3348f, 519.43396f, 102, 0.86383355f}, {381.0387f, 692.09515f, 103, 0.7551306f}
             , {659.49194f, 312.24445f, 104, 0.8305682f}, {693.5356f, 519.4844f, 105, 0.8932837f}, {694.0054f, 692.4169f, 106, 0.8742422f}
@@ -139,6 +153,12 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         templateImgView.setImageResource(R.drawable.skeleton_template);
         similarityTxt = this.findViewById(R.id.similarity_txt);
         timerTxt = this.findViewById(R.id.timer_txt);
+        wordTxt = this.findViewById(R.id.word_txt);
+        translationTxt = this.findViewById(R.id.translation_txt);
+        redBox = this.findViewById(R.id.red);
+        greenBox = this.findViewById(R.id.green);
+
+        //halfGreenBox = this.findViewById(R.id.half_green);
 
         this.createSkeletonAnalyzer();
         Button facingSwitchBtn = this.findViewById(R.id.skeleton_facingSwitch);
@@ -327,12 +347,39 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
                 long currentTime = System.currentTimeMillis();
                 long newElapsed = (System.currentTimeMillis() - startTime) / 1000;
-                if (newElapsed != elapsed)
-                {
+                if (newElapsed != elapsed) {
                     elapsed = newElapsed;
-                    Log.d("michael", "elapsed"+valueOf(elapsed));
-                    int remaining = 10 - (int)(elapsed % 10);
+                    Log.d("michael", "elapsed" + valueOf(elapsed));
+                    int remaining = 9 - (int) (elapsed % 10);
                     mainActivity.timerTxt.setText((remaining) + "");
+
+                    if (remaining == 0) {
+
+                        //TODO add correct sound
+                        //calculate and display results
+                        if (meanSimilarity >= 0.5) {
+                            //correct posture
+                            mainActivity.greenBox.setVisibility(View.VISIBLE);
+                        } else {
+                            //incorrect
+                            mainActivity.redBox.setVisibility(View.VISIBLE);
+                        }
+                        mainActivity.translationTxt.setVisibility(View.VISIBLE);
+                    } else if (remaining == 9) {
+                        //display next round
+                        Random Dice = new Random();
+                        int n = Dice.nextInt(words.length);
+                        currentWord = words[n];
+                        currentTranslation = translations[n];
+                        mainActivity.wordTxt.setText("currentWord");
+                        mainActivity.translationTxt.setText("currentTranslation");
+
+                        //clear backgrounds
+                        mainActivity.redBox.setVisibility(View.GONE);
+                        mainActivity.greenBox.setVisibility(View.GONE);
+                        mainActivity.translationTxt.setVisibility(View.GONE);
+
+                    }
                 }
 //              mainActivity.timerTxt.setText(remaining)
             }

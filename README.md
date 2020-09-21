@@ -1,5 +1,7 @@
 # FIT FIT (HackZurich2020)
 
+This project was made for HackZurich 2020, and was the 1st place winner for Huawei's brief "Unleash Innovation With HMS Core"!
+
 ## Inspiration
 A love of leveraging technology to improve life quality!
 
@@ -8,15 +10,6 @@ This app allows you to learn a new language while doing exercise, in a fun and g
 
 ## How we built it
 With patience and coffee :)
-
-## Challenges we ran into
-The hardest part of the challenge was actually setting up the environment and finding a framework that worked for us. We spent half of the time setting up the environment.
-
-## Accomplishments that we're proud of
-We persevered, even when nothing was working. Although we only got most of the work done through the last night (without getting a wink of sleep), we preserved without losing hope, and all learnt something new.
-
-## What we learned
-Android Studio, Java and using the HMS Core!
 
 ## What's next for FIT FIT
 - Adding a multiplayer mode (competitive mode)

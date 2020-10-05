@@ -170,7 +170,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         this.mPreview = this.findViewById(R.id.skeleton_preview);
         this.graphicOverlay = this.findViewById(R.id.skeleton_overlay);
         templateImgView = this.findViewById(R.id.template_imgView);
-        templateImgView.setImageResource(R.drawable.star);
+        templateImgView.setImageResource(R.drawable.superhero2);
         similarityTxt = this.findViewById(R.id.similarity_txt);
         timerTxt = this.findViewById(R.id.timer_txt);
         wordTxt = this.findViewById(R.id.word_txt);
@@ -245,7 +245,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             if (partial_voice_res.toLowerCase().contains(this.word.toLowerCase())) {
                 speechWordTxt.setText("THATS CORRECT!");
                 correctTranslation = true;
-                Log.v("CORRECT", "THATS CORRECT!");
+                Log.v("CORRECT", "CORRECT!");
 
             }
             else {
@@ -483,6 +483,8 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                             mainActivity.redBox.setVisibility(View.VISIBLE);
                         }
                         mainActivity.translationTxt.setVisibility(View.VISIBLE);
+                        mainActivity.speechWordTxt.setVisibility(View.GONE);
+
                         mainActivity.timerTxt.setVisibility(View.INVISIBLE);
                     } else if (remaining == 8) {
                         //display next round
@@ -498,12 +500,14 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                         mainActivity.redBox.setVisibility(View.GONE);
                         mainActivity.greenBox.setVisibility(View.GONE);
                         mainActivity.translationTxt.setVisibility(View.GONE);
+                        mainActivity.speechWordTxt.setText("Speak translation");
+                        mainActivity.speechWordTxt.setVisibility(View.VISIBLE);
 
                         int s = Dice.nextInt(mainActivity.vocabulary_list.length);
                         //String currentWord = mainActivity.vocabulary_list[s];
 
                         mainActivity.newWord(currentTranslation);
-                        mainActivity.speechWordTxt.setText("");
+
 
                         //change current skeleton template
                         int q = Dice.nextInt(5);

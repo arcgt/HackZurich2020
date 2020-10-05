@@ -78,6 +78,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.huawei.mlkit.example.skeleton.LiveSkeletonAnalyseActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/NoActionBar"/>
         <activity
             android:name="com.huawei.mlkit.example.skeleton.StillSkeletonAnalyseActivity"

@@ -57,32 +57,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
         apiKey = AGConnectServicesConfig.fromContext(this).getString("client/api_key");
-        this.findViewById(R.id.btn_face_live).setOnClickListener(this);
-        this.findViewById(R.id.btn_face_image).setOnClickListener(this);
-        this.findViewById(R.id.btn_text).setOnClickListener(this);
-        this.findViewById(R.id.btn_object).setOnClickListener(this);
-        this.findViewById(R.id.btn_document).setOnClickListener(this);
-        this.findViewById(R.id.btn_classification).setOnClickListener(this);
-        this.findViewById(R.id.btn_landmark).setOnClickListener(this);
-        this.findViewById(R.id.btn_translate).setOnClickListener(this);
-        this.findViewById(R.id.btn_productvisionsearch).setOnClickListener(this);
-        this.findViewById(R.id.btn_imgseg_image).setOnClickListener(this);
-        this.findViewById(R.id.btn_imgseg_live).setOnClickListener(this);
-        this.findViewById(R.id.btn_icr).setOnClickListener(this);
-        this.findViewById(R.id.btn_bcr).setOnClickListener(this);
-        this.findViewById(R.id.btn_gcr).setOnClickListener(this);
-        this.findViewById(R.id.btn_tts).setOnClickListener(this);
-        this.findViewById(R.id.btn_asr).setOnClickListener(this);
-        this.findViewById(R.id.btn_aft).setOnClickListener(this);
-        this.findViewById(R.id.btn_skeleton_live).setOnClickListener(this);
-        this.findViewById(R.id.btn_skeleton_image).setOnClickListener(this);
-
-        this.findViewById(R.id.btn_handkeypoint_live).setOnClickListener(this);
-        this.findViewById(R.id.btn_handkeypoint_still).setOnClickListener(this);
-        this.findViewById(R.id.btn_liveness_detection).setOnClickListener(this);
-        this.findViewById(R.id.btn_custom_model).setOnClickListener(this);
-        this.findViewById(R.id.btn_imageSuper_resolution).setOnClickListener(this);
-        this.findViewById(R.id.btn_documentSkewCorrection).setOnClickListener(this);
+        this.startActivity(new Intent(MainActivity.this, LiveSkeletonAnalyseActivity.class));
+//        this.findViewById(R.id.btn_face_live).setOnClickListener(this);
+//        this.findViewById(R.id.btn_face_image).setOnClickListener(this);
+//        this.findViewById(R.id.btn_text).setOnClickListener(this);
+//        this.findViewById(R.id.btn_object).setOnClickListener(this);
+//        this.findViewById(R.id.btn_document).setOnClickListener(this);
+//        this.findViewById(R.id.btn_classification).setOnClickListener(this);
+//        this.findViewById(R.id.btn_landmark).setOnClickListener(this);
+//        this.findViewById(R.id.btn_translate).setOnClickListener(this);
+//        this.findViewById(R.id.btn_productvisionsearch).setOnClickListener(this);
+//        this.findViewById(R.id.btn_imgseg_image).setOnClickListener(this);
+//        this.findViewById(R.id.btn_imgseg_live).setOnClickListener(this);
+//        this.findViewById(R.id.btn_icr).setOnClickListener(this);
+//        this.findViewById(R.id.btn_bcr).setOnClickListener(this);
+//        this.findViewById(R.id.btn_gcr).setOnClickListener(this);
+//        this.findViewById(R.id.btn_tts).setOnClickListener(this);
+//        this.findViewById(R.id.btn_asr).setOnClickListener(this);
+//        this.findViewById(R.id.btn_aft).setOnClickListener(this);
+//        this.findViewById(R.id.btn_skeleton_live).setOnClickListener(this);
+//        this.findViewById(R.id.btn_skeleton_image).setOnClickListener(this);
+//
+//        this.findViewById(R.id.btn_handkeypoint_live).setOnClickListener(this);
+//        this.findViewById(R.id.btn_handkeypoint_still).setOnClickListener(this);
+//        this.findViewById(R.id.btn_liveness_detection).setOnClickListener(this);
+//        this.findViewById(R.id.btn_custom_model).setOnClickListener(this);
+//        this.findViewById(R.id.btn_imageSuper_resolution).setOnClickListener(this);
+//        this.findViewById(R.id.btn_documentSkewCorrection).setOnClickListener(this);
     }
 
     @Override

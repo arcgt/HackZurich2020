@@ -82,6 +82,7 @@
         android:layout_marginBottom="30dp"
         android:background="@drawable/front_back_switch"
         android:textOff=""
+        android:visibility="gone"
         android:textOn="" />
 
 

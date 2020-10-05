@@ -79,19 +79,12 @@ import static java.lang.String.valueOf;
 
 public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String TAG = LiveSkeletonAnalyseActivity.class.getSimpleName();
-
     public static final int UPDATE_VIEW = 101;
-
     private static final int CAMERA_PERMISSION_CODE = 0;
-
     private Handler mHandler = new MsgHandler(this);
-
     private MLSkeletonAnalyzer analyzer;
-
     private LensEngine mLensEngine;
-
     private LensEnginePreview mPreview;
-
     //our beautiful added content
     private GraphicOverlay graphicOverlay;
     private ImageView templateImgView;
@@ -121,7 +114,7 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
     private static boolean correctTranslation = false;
 
-    private int lensType = LensEngine.BACK_LENS;
+    private int lensType = LensEngine.FRONT_LENS;
 
     private boolean isFront = false;
 
@@ -223,7 +216,6 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         String word = "TRANSLATE NOW!";
         SpeechRecognitionListener(String word) {
             this.word = word;
-
         }
 
         @SuppressLint("SetTextI18n")

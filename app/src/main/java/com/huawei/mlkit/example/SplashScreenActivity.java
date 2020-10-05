@@ -16,6 +16,8 @@ public class SplashScreenActivity extends AppCompatActivity {
     TextView textView;
     AnimationDrawable animation;
 
+    static final int DURATION = 500;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +46,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     public void progressAnimation(){
         ProgressBarAnimation anim = new ProgressBarAnimation(this, progressBar, textView, 0f, 100f);
-        anim.setDuration(5000);
+        anim.setDuration(DURATION);
         progressBar.setAnimation(anim);
     }
 }

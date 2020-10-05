@@ -76,7 +76,9 @@
         <activity
             android:name="com.huawei.mlkit.example.generalCard.GcrAnalyseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name="com.huawei.mlkit.example.skeleton.LiveSkeletonAnalyseActivity" />
+        <activity
+            android:name="com.huawei.mlkit.example.skeleton.LiveSkeletonAnalyseActivity"
+            android:theme="@style/NoActionBar"/>
         <activity
             android:name="com.huawei.mlkit.example.skeleton.StillSkeletonAnalyseActivity"
             android:screenOrientation="portrait" />
@@ -93,8 +95,11 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.huawei.mlkit.example.MainActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name="com.huawei.mlkit.example.SplashScreenActivity">
+            android:screenOrientation="portrait"
+            android:theme="@style/NoActionBar"/>
+        <activity
+            android:name="com.huawei.mlkit.example.SplashScreenActivity"
+            android:theme="@style/NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

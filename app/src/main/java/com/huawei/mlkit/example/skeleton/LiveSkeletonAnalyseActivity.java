@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.Camera;
@@ -289,11 +290,20 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         this.analyzer.setTransactor(new SkeletonAnalyzerTransactor(this, this.graphicOverlay));
     }
 
+    public static int getScreenWidth() {
+        return Resources.getSystem().getDisplayMetrics().widthPixels;
+    }
+
+    public static int getScreenHeight() {
+        return Resources.getSystem().getDisplayMetrics().heightPixels;
+    }
+
     private void createLensEngine() {
         Context context = this.getApplicationContext();
         // Create LensEngine.
         this.mLensEngine = new LensEngine.Creator(context, this.analyzer)
                 .setLensType(this.lensType)
+//                .applyDisplayDimension(getScreenHeight(), getScreenWidth())
                 .applyDisplayDimension(1280, 720)
                 .applyFps(20.0f)
                 .enableAutomaticFocus(true)

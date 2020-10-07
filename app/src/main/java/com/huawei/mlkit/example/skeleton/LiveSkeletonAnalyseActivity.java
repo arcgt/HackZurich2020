@@ -98,6 +98,17 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     private TextView greenBox;
     private TextView halfGreenBox;
 
+    private TextView greenTop;
+    private TextView greenBottom;
+    private TextView redTop;
+    private TextView redBottom;
+    private TextView greyTop;
+    private TextView greyBottom;
+    private TextView correctPose;
+
+
+
+
     private Runnable gameRunner;
     private Thread gameThread;
 
@@ -108,10 +119,16 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
     private static boolean isCorrectPosture = false;
     private static boolean isCorrectTranslation = false;
     private static double meanSimilarity = 0;
+    private static int score = 0;
+    private static int lives = 3;
+    private static int offset = 0;
+
     private static String currentWord = "你好";
     private static String currentTranslation = "Hello";
-    private static String[] words = {"你好","快乐","强"};
-    private static String[] translations = {"hello", "happy", "strong"};
+    private static String[] words = {"我","的","你","是","不","们","这","一","他","在","有","好","来","人","那","要","会","就","什","没","到","说","为","想","能","上","去","道","她","很","看","可","知","还","对","里","都","事","子","生","时","样","也","和","下","真","现","做","大","怎","出","点","起","天","把","开","让","给","但","谢","只","些","如","家","后","儿","多","意","别","所","话","小","自","回","果","发","见","心","走","定","听","觉","太","该","经","妈","用","打","地","再","因","女","告","最","手","前","找","行","快","而","死","先","像","等","从","明","中","哦","情","作","跟","面","诉","爱","已","之","问","错","孩","斯","成","它","感","干","法","电","间","哪","西","己"};
+    private static String[] translations = {"me","of","you","is","no","plural","this","one","he","at","have","good","come","person","that","want","will","just","what","not","arrive","speak","because","want","able","above","go","way","her","very","see","can","know","still","correct","inside","all","thing","child","life","time","manner","also","and","below","really","now","do","big","how","go","do","rise","day","object","open","allow","give","but","thanks","only","some","as","home","behind","son","many","idea","not","place","talk","small","self","return","fruit","send","meet","heart","walk","set","listen","feel","too much","should","pass","mom","use","hit","earth","again","reason","female","tell","most","hand","front","look for","travel","fast","and","die","first","like","wait","follow","bright","middle","oh","emotion","do","with","side","tell","love","already","of","to ask","mistake; bad","child","this","become","it","feel; emotion","to do","law","electric","between; room","which","West","oneself"};
+
+
 
     private static boolean correctTranslation = false;
 
@@ -175,8 +192,18 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
         timerTxt = this.findViewById(R.id.timer_txt);
         wordTxt = this.findViewById(R.id.word_txt);
         translationTxt = this.findViewById(R.id.translation_txt);
+        correctPose = this.findViewById(R.id.correct_pose);
         redBox = this.findViewById(R.id.red);
         greenBox = this.findViewById(R.id.green);
+
+        greenTop = this.findViewById(R.id.green_top);
+        greenBottom = this.findViewById(R.id.green_bottom);
+        redTop = this.findViewById(R.id.red_top);
+        redBottom = this.findViewById(R.id.red_bottom);
+        greyTop = this.findViewById(R.id.grey_top);
+        greyBottom = this.findViewById(R.id.grey_bottom);
+
+
         wordTextView = this.findViewById(R.id.word_txt_view);
         speechWordTxt = this.findViewById(R.id.speech_txt_view);
 
@@ -243,13 +270,20 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
             String partial_voice_res = partialResults.getString(MLAsrRecognizer.RESULTS_RECOGNIZING);
             if (partial_voice_res.toLowerCase().contains(this.word.toLowerCase())) {
-                speechWordTxt.setText("THATS CORRECT!");
+                speechWordTxt.setText("Correct Translation!");
+                greenTop.setVisibility(View.VISIBLE);
+                greyTop.setVisibility(View.INVISIBLE);
                 correctTranslation = true;
                 Log.v("CORRECT", "CORRECT!");
 
             }
+            else if (partial_voice_res.toLowerCase().contains("subError"))
+            {
+                speechWordTxt.setText("Voice recognition error. Check connection.");
+            }
             else {
-                speechWordTxt.setText(partial_voice_res);
+//                speechWordTxt.setText(partial_voice_res);
+                speechWordTxt.setText(partial_voice_res.substring(partial_voice_res.lastIndexOf(" ")+1));
                 Log.v("VOICE", partial_voice_res);
             }
         }
@@ -436,6 +470,8 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
 
     }
 
+
+
     private static class MsgHandler extends Handler {
         WeakReference<LiveSkeletonAnalyseActivity> mMainActivityWeakReference;
 
@@ -443,6 +479,8 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             mMainActivityWeakReference = new WeakReference<>(mainActivity);
         }
 
+        private static boolean correctPose = false;
+//        private static boolean correctTranslation = false;
 
         @Override
         public void handleMessage(Message msg) {
@@ -454,11 +492,12 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
             if (msg.what == UPDATE_VIEW) {
                 Bundle bundle = msg.getData();
                 float result = bundle.getFloat("similarity");
-                mainActivity.similarityTxt.setVisibility(View.VISIBLE);
+//                mainActivity.similarityTxt.setVisibility(View.GONE);
 //                mainActivity.similarityTxt.setText("similarity:" + (int) (result * 100) + "%");
 
                 meanSimilarity = 0.9 * meanSimilarity + 0.1 * (result);
                 mainActivity.similarityTxt.setText("" + (int) (meanSimilarity * 100) + "%");
+
 
                 long currentTime = System.currentTimeMillis();
                 long newElapsed = (System.currentTimeMillis() - startTime) / 1000;
@@ -469,25 +508,49 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                     mainActivity.timerTxt.setText((remaining) + "");
 
                     if (remaining == 0) {
-
-                        //TODO add correct sound
-                        //calculate and display results
+                        //Reults
                         if (correctTranslation){
-                            mainActivity.greenBox.setVisibility(View.VISIBLE);
+                            mainActivity.greenTop.setVisibility(View.VISIBLE);
+                            mainActivity.greyTop.setVisibility(View.INVISIBLE);
+//                            mainActivity.speechWordTxt.setV
+                            Log.d("michael", "green bottom" + valueOf(elapsed));
+                            score+=1;
                         }
-                        else if (meanSimilarity >= 0.5) {
-                            //correct posture
-                            mainActivity.greenBox.setVisibility(View.VISIBLE);
-                        } else {
-                            //incorrect
-                            mainActivity.redBox.setVisibility(View.VISIBLE);
+                        else {
+                            Log.d("michael", "Incorrect Translation!" + valueOf(elapsed));
+                            mainActivity.redTop.setVisibility(View.VISIBLE);
                         }
+
+                        if (correctPose) {
+                            mainActivity.greenBottom.setVisibility(View.VISIBLE);
+                            mainActivity.correctPose.setVisibility(View.GONE);
+                            score+=1;
+                            correctPose = true;
+                        }
+                        else if (correctPose == false)
+                        {
+                            Log.d("michael", "Incorrect Pose" + valueOf(elapsed));
+                            mainActivity.redBottom.setVisibility(View.VISIBLE);
+                        }
+
+                        if (!correctTranslation && !correctPose) {
+                            lives--;
+                        }
+
                         mainActivity.translationTxt.setVisibility(View.VISIBLE);
                         mainActivity.speechWordTxt.setVisibility(View.GONE);
-
+                        mainActivity.templateImgView.setVisibility(View.VISIBLE);
                         mainActivity.timerTxt.setVisibility(View.INVISIBLE);
-                    } else if (remaining == 8) {
-                        //display next round
+
+                        //set alhpa
+                        mainActivity.greenBottom.setAlpha((float) 1);
+                        mainActivity.greenTop.setAlpha((float) 1);
+
+                    }
+                    else if (remaining == 8) {
+                        //RESET new round
+                        //display next round and reset
+                        correctPose = false;
                         correctTranslation = false;
                         mainActivity.timerTxt.setVisibility(View.VISIBLE);
                         Random Dice = new Random();
@@ -497,20 +560,35 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                         mainActivity.wordTxt.setText(currentWord);
                         mainActivity.translationTxt.setText("= "+currentTranslation);
                         //clear backgrounds
-                        mainActivity.redBox.setVisibility(View.GONE);
-                        mainActivity.greenBox.setVisibility(View.GONE);
+//                        mainActivity.redBox.setVisibility(View.GONE);
+//                        mainActivity.greenBox.setVisibility(View.GONE);
+
+                        //Visibility of boxes
+                        mainActivity.greenBottom.setVisibility(View.INVISIBLE);
+                        mainActivity.greenTop.setVisibility(View.INVISIBLE);
                         mainActivity.translationTxt.setVisibility(View.GONE);
-                        mainActivity.speechWordTxt.setText("Speak translation");
+                        mainActivity.redTop.setVisibility(View.INVISIBLE);
+                        mainActivity.redBottom.setVisibility(View.INVISIBLE);
+                        mainActivity.correctPose.setVisibility(View.GONE);
+
+                        mainActivity.speechWordTxt.setText("Listening... ");
                         mainActivity.speechWordTxt.setVisibility(View.VISIBLE);
+
+                        //set pose visible
+                        mainActivity.templateImgView.setImageResource(View.VISIBLE);
 
                         int s = Dice.nextInt(mainActivity.vocabulary_list.length);
                         //String currentWord = mainActivity.vocabulary_list[s];
+                        mainActivity.greyTop.setVisibility(View.VISIBLE);
 
                         mainActivity.newWord(currentTranslation);
 
+                        //Set Alpha
+                        mainActivity.greenBottom.setAlpha((float) 0.5);
+                        mainActivity.greenTop.setAlpha((float) 0.5);
 
                         //change current skeleton template
-                        int q = Dice.nextInt(5);
+                        int q = Dice.nextInt(4);
                         if (q == 0) {
                             currentSkeletons = skeletonTemplates.get(0);
                             mainActivity.templateImgView.setImageResource(R.drawable.star);
@@ -529,6 +607,18 @@ public class LiveSkeletonAnalyseActivity extends AppCompatActivity implements Vi
                         {
                             currentSkeletons = skeletonTemplates.get(3);
                             mainActivity.templateImgView.setImageResource(R.drawable.leg);
+                        }
+                    }
+                    else if (remaining == -1) {
+                        //feedback screen
+                    }
+                    else if (remaining < 15) {
+                        if (meanSimilarity >= 0.5 && correctPose == false) {
+                            //correct posture
+                            mainActivity.correctPose.setVisibility(View.VISIBLE);
+                            mainActivity.greenBottom.setVisibility(View.VISIBLE);
+                            mainActivity.templateImgView.setVisibility(View.INVISIBLE);
+                            correctPose = true;
                         }
                     }
                 }

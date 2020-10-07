@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        this.findViewById(R.id.btn_tts).setOnClickListener(this);
 //        this.findViewById(R.id.btn_asr).setOnClickListener(this);
 //        this.findViewById(R.id.btn_aft).setOnClickListener(this);
-//        this.findViewById(R.id.btn_skeleton_live).setOnClickListener(this);
+        this.findViewById(R.id.btn_skeleton_live).setOnClickListener(this);
 //        this.findViewById(R.id.btn_skeleton_image).setOnClickListener(this);
 //
 //        this.findViewById(R.id.btn_handkeypoint_live).setOnClickListener(this);
